@@ -1,0 +1,51 @@
+{
+  "name": "alfred-flatten-folder",
+  "version": "0.0.1",
+  "description": "Alfred workflow to flatten a folder and it's contents",
+  "type": "module",
+  "main": "index.js",
+  "license": "MIT",
+  "repository": "chrisspiegl/alfred-flatten-folder",
+  "author": {
+    "name": "Chris Spiegl",
+    "email": "chris@chrisspiegl.com",
+    "url": "https://chrisspiegl.com/"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "scripts": {
+    "postinstall": "alfy-init",
+    "preuninstall": "alfy-cleanup",
+    "cu": "ncu",
+    "cu:fix": "ncu -u",
+    "format": "xo --fix"
+  },
+  "files": [
+    "icon.png",
+    "info.plist",
+    "index.js"
+  ],
+  "keywords": [
+    "alfred",
+    "workflow",
+    "macos",
+    "mac",
+    "flatten",
+    "folder",
+    "folders"
+  ],
+  "dependencies": {
+    "alert": "^5.0.10",
+    "alfy": "^0.12.2",
+    "del": "^6.0.0",
+    "dialog": "github:preethamvishy/dialog",
+    "globby": "^12.0.2",
+    "move-file": "^3.0.0",
+    "p-queue": "^7.1.0"
+  },
+  "devDependencies": {
+    "npm-check-updates": "^12.0.5",
+    "xo": "^0.47.0"
+  }
+}
