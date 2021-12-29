@@ -19,7 +19,7 @@
     "preuninstall": "alfy-cleanup",
     "cu": "ncu",
     "cu:fix": "ncu -u",
-    "format": "xo --fix"
+    "test": "xo --fix"
   },
   "files": [
     "icon.png",
