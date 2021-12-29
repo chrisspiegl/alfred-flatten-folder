@@ -6,6 +6,10 @@
 
 <img src="media/screenshot.png" style="width: 100%;">
 
+Select one or multiple folders and flatten their contents into the parent folder.
+
+This is useful when you just want all the files and don't care about the folder structure.
+
 ## Install
 
 ```
