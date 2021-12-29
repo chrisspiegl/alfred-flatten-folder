@@ -1,7 +1,5 @@
 # alfred-flatten-folder
 
-# alfred-npms
-
 > [Alfred](https://alfredapp.com) workflow to to flatten a folder and it's contents
 
 <img src="media/screenshot.png" style="width: 100%;">
