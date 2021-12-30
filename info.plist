@@ -72,9 +72,9 @@
 				<key>escaping</key>
 				<integer>68</integer>
 				<key>script</key>
-				<string>./node_modules/.bin/run-node ./index.js "{query}"</string>
+				<string>./node_modules/.bin/run-node ./index.js "$1"</string>
 				<key>scriptargtype</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>scriptfile</key>
 				<string></string>
 				<key>type</key>
@@ -118,23 +118,23 @@ https://github.com/chrisspiegl/alfred-flatten-folder</string>
 		<key>421D849D-5F8B-4206-BB5C-3A2F00ECEBCE</key>
 		<dict>
 			<key>xpos</key>
-			<integer>200</integer>
+			<integer>180</integer>
 			<key>ypos</key>
-			<integer>165</integer>
+			<integer>10</integer>
 		</dict>
 		<key>6AE6B9E4-143F-46C5-864C-629BCB19969D</key>
 		<dict>
 			<key>xpos</key>
-			<integer>30</integer>
+			<integer>10</integer>
 			<key>ypos</key>
-			<integer>165</integer>
+			<integer>10</integer>
 		</dict>
 		<key>E4092AE0-A578-4577-A554-5F8029082669</key>
 		<dict>
 			<key>xpos</key>
-			<integer>370</integer>
+			<integer>350</integer>
 			<key>ypos</key>
-			<integer>165</integer>
+			<integer>10</integer>
 		</dict>
 	</dict>
 </dict>
