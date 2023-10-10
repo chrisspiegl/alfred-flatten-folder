@@ -36,7 +36,6 @@
     "folders"
   ],
   "dependencies": {
-    "alert": "^5.0.10",
     "alfy": "^0.12.2",
     "del": "^6.0.0",
     "dialog": "github:preethamvishy/dialog",
