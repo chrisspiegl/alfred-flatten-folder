@@ -17,8 +17,8 @@
   "scripts": {
     "postinstall": "alfy-init",
     "preuninstall": "alfy-cleanup",
-    "cu": "ncu",
-    "cu:fix": "ncu -u",
+    "cu": "ncu -i --format group",
+    "release": "release-it",
     "test": "xo --fix"
   },
   "files": [
@@ -44,7 +44,8 @@
     "p-queue": "^7.1.0"
   },
   "devDependencies": {
-    "npm-check-updates": "^12.0.5",
+    "npm-check-updates": "^16.14.20",
+    "release-it": "^17.2.1",
     "xo": "^0.47.0"
   }
 }
