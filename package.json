@@ -1,6 +1,6 @@
 {
   "name": "alfred-flatten-folder",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Alfred workflow to flatten a folder and it's contents",
   "type": "module",
   "main": "index.js",
