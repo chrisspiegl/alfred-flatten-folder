@@ -177,7 +177,7 @@
 		</dict>
 	</array>
 	<key>readme</key>
-	<string>Flatten Folder moves every file in the selected folders into the parent folder, then deletes those folders. Dotfiles are included. Symbolic links are moved as links and are not followed. If a name already exists in the parent, the file is kept as "name duplicate-filename N".
+	<string>Flatten Folder moves regular files in the selected folders into the parent folder, then deletes those folders. Hidden files and symlinks inside the folder are not kept. They are removed with the original folder. This is intended. Symlinks are not followed. If a name already exists in the parent, the file is kept as "name duplicate-filename N".
 
 Alfred asks you to confirm first. Cancel stops. OK flattens the folders. This cannot be undone.
 

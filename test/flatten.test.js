@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { chmod, lstat, mkdir, mkdtemp, readFile, readlink, rm, symlink, writeFile } from 'node:fs/promises'
+import { chmod, lstat, mkdir, mkdtemp, readFile, rm, symlink, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { test } from 'node:test' // eslint-disable-line test/no-import-node-test -- node --test is the project runner
@@ -32,7 +32,7 @@ test('escapes glob characters in a folder path', () => {
   assert.equal(escapeGlobPath('/tmp/dir[name]/*.txt'), '/tmp/dir[[]name[]]/\\*.txt')
 })
 
-test('moves a dotfile, leaves a symlink target in place, and deletes the folder', async () => {
+test('does not leave dotfiles or symlinks in the parent, and does not follow symlinks', async () => {
   await withTempDirectory(async (root) => {
     const parent = path.join(root, 'parent')
     const folder = path.join(parent, 'folder')
@@ -49,12 +49,13 @@ test('moves a dotfile, leaves a symlink target in place, and deletes the folder'
 
     await flattenDirectory(folder)
 
-    assert.equal(await readText(path.join(parent, '.hidden')), 'dot')
     assert.equal(await readText(path.join(parent, 'visible.txt')), 'visible')
-    assert.equal(await readText(outsideFile), 'stay')
-    assert.equal(await readlink(path.join(parent, 'dir-link')), outside)
-    assert.equal(await readlink(path.join(parent, 'file-link')), outsideFile)
+    await assert.rejects(lstat(path.join(parent, '.hidden')), { code: 'ENOENT' })
+    await assert.rejects(lstat(path.join(parent, 'dir-link')), { code: 'ENOENT' })
+    await assert.rejects(lstat(path.join(parent, 'file-link')), { code: 'ENOENT' })
     await assert.rejects(lstat(folder), { code: 'ENOENT' })
+    assert.equal(await readText(outsideFile), 'stay')
+    await lstat(outside)
     await assert.rejects(lstat(path.join(parent, 'secret.txt')), { code: 'ENOENT' })
   })
 })
@@ -65,12 +66,14 @@ test('flattens a folder whose name contains glob characters', async () => {
     const decoy = path.join(root, 'dirn')
     await mkdir(path.join(folder, 'nested'), { recursive: true })
     await mkdir(decoy)
-    await writeFile(path.join(folder, 'nested', '.keep'), 'kept')
+    await writeFile(path.join(folder, 'nested', 'keep.txt'), 'kept')
+    await writeFile(path.join(folder, 'nested', '.keep'), 'hidden')
     await writeFile(path.join(decoy, 'secret.txt'), 'stay')
 
     await flattenDirectory(folder)
 
-    assert.equal(await readText(path.join(root, '.keep')), 'kept')
+    assert.equal(await readText(path.join(root, 'keep.txt')), 'kept')
+    await assert.rejects(lstat(path.join(root, '.keep')), { code: 'ENOENT' })
     assert.equal(await readText(path.join(decoy, 'secret.txt')), 'stay')
     await assert.rejects(lstat(folder), { code: 'ENOENT' })
   })
@@ -154,12 +157,14 @@ test('flattens each selected folder', async () => {
     await mkdir(path.join(first, 'nested'), { recursive: true })
     await mkdir(second)
     await writeFile(path.join(first, 'nested', 'a.txt'), 'a')
-    await writeFile(path.join(second, '.b'), 'b')
+    await writeFile(path.join(second, 'b.txt'), 'b')
+    await writeFile(path.join(second, '.b'), 'hidden')
 
     await flattenDirectories([first, second])
 
     assert.equal(await readText(path.join(root, 'a.txt')), 'a')
-    assert.equal(await readText(path.join(root, '.b')), 'b')
+    assert.equal(await readText(path.join(root, 'b.txt')), 'b')
+    await assert.rejects(lstat(path.join(root, '.b')), { code: 'ENOENT' })
     await assert.rejects(lstat(first), { code: 'ENOENT' })
     await assert.rejects(lstat(second), { code: 'ENOENT' })
   })

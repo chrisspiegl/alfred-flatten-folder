@@ -1,6 +1,6 @@
 # alfred-flatten-folder
 
-Alfred workflow that flattens selected folders. Every file in a selected folder moves into the parent folder, including dotfiles, and the selected folder is then deleted. Symbolic links are moved as links and are not followed, so a target outside the folder stays where it is. If the parent already has that name, the moved file is kept as `name duplicate-filename 1`.
+Alfred workflow that flattens selected folders. Regular files in a selected folder move into the parent folder, and the selected folder is then deleted. Hidden files and symlinks inside the folder are not kept. They are removed with the original folder. This is intended. Symlinks are not followed, so a file outside the selected folder is not moved. If the parent already has that name, the moved file is kept as `name duplicate-filename 1`.
 
 This cannot be undone. Duplicate the folder first if you want a copy.
 

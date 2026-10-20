@@ -83,37 +83,46 @@ export async function moveFileToDestination(source, destination, maxAttempts = M
   throw new Error(`Could not move "${source}" because the destination already exists after ${maxAttempts} attempts`)
 }
 
+function isHiddenPath(root, candidate) {
+  const relative = path.relative(root, candidate)
+  return relative.split(path.sep).some(segment => segment.startsWith('.'))
+}
+
 async function listMovablePaths(directoryPath) {
   const pattern = `${escapeGlobPath(directoryPath)}/**/*`
   const matches = await globby(pattern, {
     absolute: true,
-    dot: true,
+    dot: false,
     expandDirectories: false,
     followSymbolicLinks: false,
-    onlyFiles: false,
+    onlyFiles: true,
   })
 
   const movable = []
   for (const match of matches) {
+    if (isHiddenPath(directoryPath, match))
+      continue
+
     const stats = await lstat(match)
-    if (stats.isSymbolicLink() || stats.isFile())
-      movable.push(match)
+    if (stats.isSymbolicLink() || !stats.isFile())
+      continue
+
+    movable.push(match)
   }
 
   return movable
 }
 
-async function remainingUndeletedPaths(directoryPath) {
+async function remainingUnmovedFiles(directoryPath) {
   const remaining = []
 
   async function walk(directory) {
     const entries = await readdir(directory, { withFileTypes: true })
     for (const entry of entries) {
-      const fullPath = path.join(directory, entry.name)
-      if (entry.isSymbolicLink()) {
-        remaining.push(fullPath)
+      if (entry.isSymbolicLink() || entry.name.startsWith('.'))
         continue
-      }
+
+      const fullPath = path.join(directory, entry.name)
       if (entry.isDirectory()) {
         await walk(fullPath)
         continue
@@ -156,7 +165,7 @@ export async function flattenDirectory(directoryPath) {
     await moveFileToDestination(match, destination)
   }
 
-  const remaining = await remainingUndeletedPaths(resolved)
+  const remaining = await remainingUnmovedFiles(resolved)
   if (remaining.length > 0) {
     throw new Error(`Refusing to delete "${resolved}" because these paths were not moved: ${remaining.join(', ')}`)
   }
