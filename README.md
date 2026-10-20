@@ -1,12 +1,13 @@
 # alfred-flatten-folder
 
-> [Alfred](https://alfredapp.com) workflow to to flatten a folder and it's contents
+Alfred workflow that flattens selected folders. Regular files in a selected folder move into the parent folder, and the selected folder is then deleted. Hidden files and symlinks inside the folder are not kept. They are removed with the original folder. This is intended. Symlinks are not followed, so a file outside the selected folder is not moved. If the parent already has that name, the moved file is kept as `name duplicate-filename 1`.
 
-<img src="media/screenshot.png" style="width: 100%;">
+This cannot be undone. Duplicate the folder first if you want a copy.
 
-Select one or multiple folders and flatten their contents into the parent folder.
+## Requirements
 
-This is useful when you just want all the files and don't care about the folder structure.
+- [Alfred 5](https://alfredapp.com) with the [Powerpack](https://alfredapp.com/powerpack/)
+- Node.js 20+ (verified on 24)
 
 ## Install
 
@@ -14,18 +15,24 @@ This is useful when you just want all the files and don't care about the folder 
 npm install --global alfred-flatten-folder
 ```
 
-*Requires [Node.js](https://nodejs.org) 14+ and the Alfred [Powerpack](https://alfredapp.com/powerpack/).*
-
 ## Usage
 
-*Careful: the flattening process can not be reversed!*
+1. Select one or more folders in Finder and open Universal Actions.
+2. Choose `Flatten Folder(s)` and press Enter.
+3. Alfred asks you to confirm. Cancel notifies you and stops. OK runs the flatten, then posts a success notification.
 
-If you want to test if you like the result of the flattening, duplicate the folder before flattening!
+## Maintainer
 
-1. Select a folder in the macOS Finder and then activate the Universal Actions.
-2. For me this is setup to be <kbd>Command</kbd><kbd>Command</kbd>.
-3. Then you can enter `Flatten Folder` and press <kbd>Enter</kbd>.
-4. You will be presented with some dialog windows so you actually have to confirm!
+```bash
+pnpm install
+pnpm lint
+pnpm test
+pnpm release
+```
+
+## Release
+
+From a clean `main` checkout, `pnpm release` prompts for the version, publishes to npm with pnpm, and creates the GitHub release. Requires npm login and a GitHub token (`GITHUB_TOKEN`) or `gh` auth.
 
 ## Related
 
