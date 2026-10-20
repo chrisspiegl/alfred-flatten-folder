@@ -47,5 +47,13 @@
     "npm-check-updates": "^16.14.20",
     "release-it": "^17.2.1",
     "xo": "^0.47.0"
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release v${version}"
+    },
+    "github": {
+      "release": true
+    }
   }
 }
