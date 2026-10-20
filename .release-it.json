@@ -1,0 +1,19 @@
+{
+  "$schema": "https://unpkg.com/release-it/schema/release-it.json",
+  "git": {
+    "commitMessage": "release: v${version}",
+    "tagName": "v${version}",
+    "push": true
+  },
+  "github": {
+    "release": true,
+    "releaseName": "v${version}"
+  },
+  "npm": {
+    "publish": true,
+    "publishPackageManager": "pnpm"
+  },
+  "hooks": {
+    "before:init": ["pnpm lint", "pnpm test"]
+  }
+}

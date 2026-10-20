@@ -1,31 +1,16 @@
 {
   "name": "alfred-flatten-folder",
-  "version": "0.0.3",
-  "description": "Alfred workflow to flatten a folder and it's contents",
   "type": "module",
-  "main": "index.js",
-  "license": "MIT",
-  "repository": "chrisspiegl/alfred-flatten-folder",
+  "version": "0.0.3",
+  "packageManager": "pnpm@10.33.4",
+  "description": "Alfred workflow to flatten a folder and its contents",
   "author": {
     "name": "Chris Spiegl",
     "email": "chris@chrisspiegl.com",
     "url": "https://chrisspiegl.com/"
   },
-  "engines": {
-    "node": ">=14"
-  },
-  "scripts": {
-    "postinstall": "alfy-init",
-    "preuninstall": "alfy-cleanup",
-    "cu": "ncu -i --format group",
-    "release": "release-it",
-    "test": "xo --fix"
-  },
-  "files": [
-    "icon.png",
-    "info.plist",
-    "index.js"
-  ],
+  "license": "MIT",
+  "repository": "chrisspiegl/alfred-flatten-folder",
   "keywords": [
     "alfred",
     "workflow",
@@ -35,17 +20,31 @@
     "folder",
     "folders"
   ],
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "info.plist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "postinstall": "alfy-init",
+    "preuninstall": "alfy-cleanup",
+    "lint": "eslint .",
+    "test": "node --test",
+    "release": "release-it"
+  },
   "dependencies": {
-    "alfy": "^0.12.2",
-    "del": "^6.0.0",
-    "dialog": "github:preethamvishy/dialog",
-    "globby": "^12.0.2",
-    "move-file": "^3.0.0",
-    "p-queue": "^7.1.0"
+    "alfy": "^3.1.0",
+    "del": "^6.1.1",
+    "globby": "^12.2.0",
+    "move-file": "^3.1.0"
   },
   "devDependencies": {
-    "npm-check-updates": "^16.14.20",
-    "release-it": "^17.2.1",
-    "xo": "^0.47.0"
+    "@antfu/eslint-config": "^9.5.1",
+    "eslint": "^10.13.0",
+    "release-it": "^20.2.1"
   }
 }
